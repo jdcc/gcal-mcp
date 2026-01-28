@@ -154,6 +154,7 @@ def create_event(
     description: str = "",
     location: str = "",
     attendees: Optional[list[str]] = None,
+    recurrence: Optional[list[str]] = None,
 ) -> str:
     """Create a calendar event.
 
@@ -165,6 +166,10 @@ def create_event(
         description: Event description.
         location: Event location.
         attendees: List of email addresses to invite.
+        recurrence: List of RFC 5545 RRULE/EXRULE/RDATE/EXDATE strings.
+            Examples: ["RRULE:FREQ=WEEKLY;BYDAY=MO,WE,FR"],
+            ["RRULE:FREQ=DAILY;COUNT=10"],
+            ["RRULE:FREQ=MONTHLY;BYMONTHDAY=1;UNTIL=20261231T000000Z"].
     """
     try:
         service = get_service()
@@ -179,6 +184,8 @@ def create_event(
             body["location"] = location
         if attendees:
             body["attendees"] = [{"email": a} for a in attendees]
+        if recurrence:
+            body["recurrence"] = recurrence
 
         event = service.events().insert(calendarId=calendar_id, body=body).execute()
         return json.dumps(
@@ -188,6 +195,7 @@ def create_event(
                 "htmlLink": event.get("htmlLink", ""),
                 "start": event.get("start", {}),
                 "end": event.get("end", {}),
+                "recurrence": event.get("recurrence", []),
             },
             indent=2,
         )
