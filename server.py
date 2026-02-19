@@ -150,7 +150,7 @@ def create_event(
     summary: str,
     start: str,
     end: str,
-    calendar_id: str = "primary",
+    calendar_id: str = "ft9n11spn8mil5ijtn62cfbeh4@group.calendar.google.com",
     description: str = "",
     location: str = "",
     attendees: Optional[list[str]] = None,
@@ -162,7 +162,7 @@ def create_event(
         summary: Event title.
         start: Start time as ISO datetime (YYYY-MM-DDTHH:MM) or date (YYYY-MM-DD).
         end: End time as ISO datetime or date.
-        calendar_id: Calendar ID (default "primary").
+        calendar_id: Calendar ID (default: Reminders calendar).
         description: Event description.
         location: Event location.
         attendees: List of email addresses to invite.
